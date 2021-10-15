@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!--Prima Prova di Linq to XML-->
+<Studenti>
+  <Studente ID="1">
+    <Nome>Alex</Nome>
+    <Cognome>Mazzoni</Cognome>
+    <Voto>8</Voto>
+    <Mail>username@domain.li</Mail>
+  </Studente>
+  <Studente ID="2">
+    <Nome>Piero</Nome>
+    <Cognome>Berlino</Cognome>
+    <Voto>6.5</Voto>
+    <Mail>username@domain.li</Mail>
+  </Studente>
+</Studenti>
