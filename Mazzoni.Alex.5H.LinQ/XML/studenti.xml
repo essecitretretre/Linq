@@ -4,13 +4,19 @@
   <Studente ID="1">
     <Nome>Alex</Nome>
     <Cognome>Mazzoni</Cognome>
-    <Voto>8</Voto>
-    <Mail>username@domain.li</Mail>
+    <Voto>6</Voto>
+    <Citta>Rimini</Citta>
   </Studente>
-  <Studente ID="2">
+  <Studente ID="3">
     <Nome>Piero</Nome>
     <Cognome>Berlino</Cognome>
-    <Voto>6.5</Voto>
-    <Mail>username@domain.li</Mail>
+    <Voto>7</Voto>
+    <Citta>Riccione</Citta>
+  </Studente>
+  <Studente ID="2">
+    <Nome>Mario</Nome>
+    <Cognome>Peppino</Cognome>
+    <Voto>9</Voto>
+    <Citta>Firenze</Citta>
   </Studente>
 </Studenti>

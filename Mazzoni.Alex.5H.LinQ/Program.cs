@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Xml.Linq;
 
@@ -9,43 +10,131 @@ namespace Mazzoni.Alex._5H.LinQ
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("© – Copyright. - Alex Mazzoni ® - All rights reserved - V^H Linq™.\n");
-            //Breve spiegazioni Libreria Linq
+            Console.WriteLine("© – Copyright. - Alex Mazzoni ® - All rights reserved - V^H MenuLinq™.\n");
 
-            //int[] numeri = new int[] { 1, 2, 3, 4 };
+            bool uscire = false;
+            string vocescelta="Nessuna voce scelta";
+            do
+            {
+                Console.WriteLine("\nMenu\n");
+                Console.WriteLine($"Voce precedentemente scelta: {vocescelta}\n");
 
-            //List<int> numeriMaggioridiDue = new List<int>();
+                Console.WriteLine($"Premere: enter - Per uscire dal menu\n");
+                Console.WriteLine($"Premere: {0} - Per la creazione di un xml in input");
+                Console.WriteLine($"Premere: {1} - Per la creazione di un xml \"scolpito\"");
+                Console.WriteLine($"Premere: {2} - Per visualizzare la struttura xml creata");
+                Console.WriteLine($"Premere: {3} - Per visualizzare le citta che contengono Ri");
+                Console.WriteLine($"Premere: {4} - Per visualizzare le citta");
+                Console.WriteLine($"Premere: {5} - Per visualizzare SOLO il voto massimo");
+                Console.WriteLine($"Premere: {6} - Per visualizzare voti in ordine decrescente");
+                Console.WriteLine($"Premere: {7} - Per visualizzare i gruppi in base alle citta");
 
-            ////Nuovo metodo
-            //numeriMaggioridiDue = numeri.Where(numero => numero > 2).ToList();
+                Console.Write("\n Quale voce vuole selezionare: ");
+                vocescelta = Console.ReadLine();
+                Console.WriteLine("\n\n");
 
-            //// Vecchio metodo
-            ////for (int i = 0; i < 4; i++)
-            ////    if (numeri[i] > 2)
-            ////        numeriMaggioridiDue.Add(numeri[i]);
+                Console.Clear();
+                EsisteIlFileXml();
 
-            //foreach (var a in numeriMaggioridiDue)
-            //    Console.WriteLine(a);
+                switch (vocescelta)
+                {
+                    case "":
+                        uscire = true;
+                        break;
+                    case "0":
+                        InserimentoInput();
+                        break;
+                    case "1":
+                        InserimentoScolpito();
+                        break;
+                    case "2":
+                        XMLParsing("../../../XML/studenti.xml");
+                        break;
+                    case "3":
+                        XMLOperations("../../../XML/studenti.xml");
+                        break;
+                    case "4":
+                        XMLOperationsCitta("../../../XML/studenti.xml");
+                        break;
+                    case "5":
+                        XMLOperationsSoloVotoMax("../../../XML/studenti.xml");
+                        break;
+                    case "6":
+                        XMLOperationsVotoMax("../../../XML/studenti.xml");
+                        break;
+                    case "7":
+                        XMLOperationsGroup("../../../XML/studenti.xml");
+                        break;
+                }
+                
+            }
+            while(!uscire); //Uscire se si(true) esce, senno se no(false) non esce
+        }
 
+        static void InserimentoInput()
+        {
+            Console.Write("\nInserisci il Nome dello studente: ");
+            string nome = Console.ReadLine();
+            Console.Write("\nInserisci il Cognome dello studente: ");
+            string cognome = Console.ReadLine();
+            Console.Write("\nInserisci il Voto dello studente: ");
+            string voto = Console.ReadLine();
+            Console.Write("\nInserisci la Città dello studente: ");
+            string citta = Console.ReadLine();
 
             XDocument xmlDocument = new XDocument
             (
                 new XDeclaration("1.0", "utf-8", "yes"),
                 new XComment("Prima Prova di Linq to XML"),
-                new XElement("Studenti",
-                    new XElement("Studente", new XAttribute("ID", 1),
+                new XElement
+                ("Studenti", new XElement
+                    ("Studente", new XAttribute("ID", 1),
+                        new XElement("Nome", nome),
+                        new XElement("Cognome", cognome),
+                        new XElement("Voto", voto),
+                        new XElement("Citta", citta)
+                    )
+                )
+            );
+
+            xmlDocument.Save("../../../XML/studenti.xml");
+        }
+
+        static void EsisteIlFileXml()
+        {
+            if(!File.Exists("../../../XML/studenti.xml"))
+            {
+                InserimentoScolpito();
+            }
+        }
+
+        static void InserimentoScolpito()
+        {
+            XDocument xmlDocument = new XDocument
+            (
+                new XDeclaration("1.0", "utf-8", "yes"),
+                new XComment("Prima Prova di Linq to XML"),
+                new XElement
+                ("Studenti",
+                    new XElement
+                    ("Studente",
+                        new XAttribute("ID", 1),
                         new XElement("Nome", "Alex"),
                         new XElement("Cognome", "Mazzoni"),
                         new XElement("Voto", "6"),
                         new XElement("Citta", "Rimini")
                     ),
-                    new XElement("Studente", new XAttribute("ID", 3),
+                    new XElement
+                    ("Studente",
+                        new XAttribute("ID", 3),
                         new XElement("Nome", "Piero"),
                         new XElement("Cognome", "Berlino"),
                         new XElement("Voto", "7"),
                         new XElement("Citta", "Riccione")
                     ),
-                    new XElement("Studente", new XAttribute("ID", 2),
+                    new XElement
+                    ("Studente",
+                        new XAttribute("ID", 2),
                         new XElement("Nome", "Mario"),
                         new XElement("Cognome", "Peppino"),
                         new XElement("Voto", "9"),
@@ -55,19 +144,6 @@ namespace Mazzoni.Alex._5H.LinQ
             );
 
             xmlDocument.Save("../../../XML/studenti.xml");
-
-            Console.WriteLine("Visualizza struttura XML");
-            XMLParsing("../../../XML/studenti.xml");
-            Console.WriteLine("Visualizza Prime Operazioni Fatte"); 
-            XMLOperations("../../../XML/studenti.xml");
-            Console.WriteLine("Visualizza Operazioni sulle Citta che contengono sono Ri"); 
-            XMLOperationsCitta("../../../XML/studenti.xml");
-            Console.WriteLine("Visualizza Solo il voto massimo"); 
-            XMLOperationsSoloVotoMax("../../../XML/studenti.xml");
-            Console.WriteLine("Visualizza In ordine descrescente i voti");
-            XMLOperationsVotoMax("../../../XML/studenti.xml");
-            Console.WriteLine("Visualizza il Gruppo della citta Rimini");
-            XMLOperationsGroup("../../../XML/studenti.xml");
         }
 
         static void XMLParsing(string Path) 
@@ -106,7 +182,7 @@ namespace Mazzoni.Alex._5H.LinQ
         {
             XDocument doc = XDocument.Load(Path);
 
-            var query = from d in doc.Descendants("Citta") //Prima di tutto creo una query che restituisce una raccolta (filtrata) degli elementi "studente" (essendo XML un albero di tag, questi elementi vengono visti come discendenti del documento, da qui l'uso di "doc.Descendants")
+            var query = from d in doc.Descendants("Citta") 
 
                         select d.Value;
 
